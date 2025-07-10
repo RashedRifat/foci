@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: foci-app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+
+  db:
+    image: postgres:15
+    restart: always
+    container_name: foci-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: foci
+      POSTGRES_DB: foo
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
